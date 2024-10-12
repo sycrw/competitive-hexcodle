@@ -7,7 +7,9 @@ export const Home = () => {
   }, []);
   return (
     <>
-      <button></button>
+      <h1 className='text-4xl font-bold'>Hexcodle</h1>
+      <button>Create session</button>
+      <button>Join session</button>
     </>
   );
 };

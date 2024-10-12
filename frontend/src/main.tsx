@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import {Home} from './routes/home.tsx';
+import './input.css';
 
 const router = createBrowserRouter([
   {

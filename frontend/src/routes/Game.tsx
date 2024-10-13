@@ -10,7 +10,7 @@ import {envSettings} from '../util/EnvSettings.ts';
 export const Game = () => {
   const [game, setGame] = useState<GameWithPlayers | undefined>();
   let {gameId} = useParams<string>();
-  const ws = new WebSocket(`ws://${envSettings.getHost()}/ws`);
+  const ws = new WebSocket(`https://${envSettings.getHost()}/ws`);
 
   ws.onmessage = function (event) {
     // This runs when receiving message.

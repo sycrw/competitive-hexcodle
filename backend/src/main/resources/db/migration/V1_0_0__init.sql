@@ -1,0 +1,18 @@
+CREATE TABLE game_entity
+(
+    id             BIGINT AUTO_INCREMENT PRIMARY KEY,
+    slug           VARCHAR(255) NOT NULL,
+    color_hex_code VARCHAR(7)   NOT NULL,
+    created_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+CREATE TABLE player_entity
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nickname   VARCHAR(255) NOT NULL,
+    game_id    BIGINT       NOT NULL,
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ALTER TABLE player_entity
+    ADD FOREIGN KEY fk_game (game_id) REFERENCES game_entity (id);

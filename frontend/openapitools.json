@@ -8,7 +8,6 @@
         "generatorName": "typescript-axios",
         "glob": "./default-api.yaml",
         "output": "./src/gen",
-        "apiNameSuffix": "defaultApi",
         "typeMappings": {
           "date": "Date"
         },

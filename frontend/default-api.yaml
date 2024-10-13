@@ -1,0 +1,160 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "https://privileges-wn-mauritius-confidentiality.trycloudflare.com",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/game/{gameSlug}/join": {
+      "put": {
+        "tags": [
+          "game-controller"
+        ],
+        "operationId": "joinGame",
+        "parameters": [
+          {
+            "name": "gameSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Player"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/game": {
+      "post": {
+        "tags": [
+          "game-controller"
+        ],
+        "operationId": "createGame",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/game/{gameSlug}": {
+      "get": {
+        "tags": [
+          "game-controller"
+        ],
+        "operationId": "getGame",
+        "parameters": [
+          {
+            "name": "gameSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameWithPlayers"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Player": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "gameId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "colorHexCode": {
+            "type": "string"
+          }
+        }
+      },
+      "GameWithPlayers": {
+        "type": "object",
+        "properties": {
+          "game": {
+            "$ref": "#/components/schemas/Game"
+          },
+          "playerList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Player"
+            }
+          }
+        }
+      }
+    }
+  }
+}

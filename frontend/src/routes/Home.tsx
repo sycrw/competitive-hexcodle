@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import {Button} from '../components/atoms/Button.tsx';
 import {Input} from '../components/atoms/Input.tsx';
-import {redirect, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {gameApi} from '../util/OpenApiFactory.ts';
 
 export const Home = () => {
 
@@ -13,8 +14,11 @@ export const Home = () => {
   }, []);
 
   const createGame = () => {
-    const slug = 'test';//createGame();
-    redirect(`/game/${slug}`);
+    setLoading(true);
+    gameApi.createGame().then((response) => {
+      navigate(`/game/${response.data.slug}`);
+      setLoading(false)
+    }).catch((e)=>{setLoading(false);throw e});
   };
 
   const joinGame = () => {
@@ -24,8 +28,8 @@ export const Home = () => {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="flex flex-col items-center w-full max-w-96 gap-1">
-        <Button onClick={createGame}>Create session</Button>
+        <div className="flex flex-col items-center w-full max-w-96 gap-1">
+        <Button onClick={createGame} animated={true} >Create Game</Button>
         <div className="w-full flex justify-center gap-1">
           <Input placeholder="SLUG" onChange={(e) => {
             setSlugInput(e.target.value);

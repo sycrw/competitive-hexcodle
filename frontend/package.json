@@ -4,13 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "openApi": "openapi-generator-cli generate",
+    "dev": "openapi-generator-cli generate && vite",
     "build": "tsc -b && vite build",
     "lint": "eslint hexcodle",
     "preview": "vite preview"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "axios": "^1.7.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-loader-spinner": "^6.1.6",

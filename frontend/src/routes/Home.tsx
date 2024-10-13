@@ -7,6 +7,7 @@ import {gameApi} from '../util/OpenApiFactory.ts';
 export const Home = () => {
 
   const [slugInput, setSlugInput] = useState(undefined);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {

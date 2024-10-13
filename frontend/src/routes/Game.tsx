@@ -38,8 +38,12 @@ export const Game = () => {
 
   return (
     <GameContext.Provider value={game}>
+      {game && <>
+        <Colors color1={''} color2={'#292929'}/>
+        <EnterHex onSubmit={(newHex) => updateGame(newHex)}/>
+      </>
+      }
 
-      <EnterHex></EnterHex>
 
     </GameContext.Provider>
   )

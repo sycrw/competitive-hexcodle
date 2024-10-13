@@ -1,0 +1,30 @@
+@keyframes whoosh {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.whoosh-animation {
+    position: relative;
+    overflow: hidden;
+}
+
+.whoosh-animation::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -100%;
+    width: 200%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: rotate(45deg);
+    animation: whoosh 0.5s ease-in-out;
+    z-index: 1;
+}
+
+.whoosh-animation:hover::before {
+    animation: whoosh 0.5s ease-in-out;
+}

@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://privileges-wn-mauritius-confidentiality.trycloudflare.com",
+      "url": "http://localhost:8080",
       "description": "Generated server url"
     }
   ],
@@ -53,7 +53,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Game"
+                  "$ref": "#/components/schemas/GameWithPlayers"
                 }
               }
             }

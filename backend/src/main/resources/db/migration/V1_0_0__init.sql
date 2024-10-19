@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS hexcode;
 CREATE TABLE game_entity
 (
     id             BIGINT AUTO_INCREMENT PRIMARY KEY,

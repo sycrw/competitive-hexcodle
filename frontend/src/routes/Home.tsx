@@ -11,13 +11,13 @@ export const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'luis = bruf';
+    document.title = 'tim = bruf';
   }, []);
 
   const createGame = () => {
     setLoading(true);
     gameApi.createGame().then((response) => {
-      navigate(`/game/${response.data.slug}`);
+      navigate(`/game/${response.data.game?.slug}`);
       setLoading(false)
     }).catch((e)=>{setLoading(false);throw e});
   };

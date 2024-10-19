@@ -19,7 +19,7 @@ public class PlayerService {
     private GameRepository gameRepository;
     private NicknameGenerator nicknameGenerator;
     private ServiceMapper serviceMapper;
-    public Player joinGame(String gameSlug){
+    public Player joinGameByGameSlug(String gameSlug){
         String nickname = nicknameGenerator.generateRandomNickname();
         Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(gameSlug));
         PlayerEntity playerEntity = PlayerEntity.builder().nickname(nickname).gameId(game.getId()).build();

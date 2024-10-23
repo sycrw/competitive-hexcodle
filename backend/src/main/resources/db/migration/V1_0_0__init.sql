@@ -1,4 +1,5 @@
-CREATE TABLE game_entity
+CREATE DATABASE IF NOT EXISTS hexcode;
+CREATE TABLE game
 (
     id             BIGINT AUTO_INCREMENT PRIMARY KEY,
     slug           VARCHAR(255) NOT NULL,
@@ -6,7 +7,7 @@ CREATE TABLE game_entity
     created_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-CREATE TABLE player_entity
+CREATE TABLE player
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     nickname   VARCHAR(255) NOT NULL,
@@ -14,5 +15,5 @@ CREATE TABLE player_entity
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-ALTER TABLE player_entity
-    ADD FOREIGN KEY fk_game (game_id) REFERENCES game_entity (id);
+ALTER TABLE player
+    ADD FOREIGN KEY fk_game (game_id) REFERENCES game (id);

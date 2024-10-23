@@ -4,7 +4,7 @@ import {envSettings} from './EnvSettings.ts';
 
 const configuration = new Configuration({});
 
-const basePath = `https://${envSettings.getHost()}`
+const basePath = `http://${envSettings.getHost()}`
 const lagerAxios = axios.create();
 lagerAxios.defaults.headers.common = {
   'Access-Control-Allow-Origin': '*',

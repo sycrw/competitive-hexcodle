@@ -10,5 +10,5 @@ import lombok.Data;
 public class BetMessage {
     int userId;
     int gameId;
-    String hexaCode;
+    String hexCode;
 }

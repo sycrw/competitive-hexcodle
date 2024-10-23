@@ -28,13 +28,15 @@ public class GameController {
     GameService gameService;
     PlayerService playerService;
     @PostMapping
-    ResponseEntity<Game> createGame(){
+    ResponseEntity<GameWithPlayers> createGame(){
         Game newGame = gameService.createGame();
-        return ResponseEntity.ok().body(newGame);
+        Player player = playerService.joinGameByGameSlug(newGame.getSlug());
+        GameWithPlayers newGameWithPlayers = GameWithPlayers.builder().game(newGame).playerList(List.of(player)).build();
+        return ResponseEntity.ok().body(newGameWithPlayers);
     }
     @PutMapping("/{gameSlug}/join")
     ResponseEntity<Player> joinGame(@PathVariable String gameSlug){
-        Player player = playerService.joinGame(gameSlug);
+        Player player = playerService.joinGameByGameSlug(gameSlug);
         return ResponseEntity.ok().body(player);
     }
 

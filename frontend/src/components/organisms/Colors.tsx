@@ -8,10 +8,10 @@ interface GameProps {
 export const Colors = ({color1,color2}:GameProps)=>{
 
   return(<div className="flex justify-center gap-2 w-full">
-    <div style={{background: color1}} className={`w-96 h-96 rounded-xl }]`}>
+    <div style={{backgroundColor: color1}} className={`w-96 h-96 rounded-xl`}>
 
     </div>
-    <div style={{background: color2}} className={`w-96 h-96 rounded-xl`}>
+    <div style={{backgroundColor: color2}} className={`w-96 h-96 rounded-xl`}>
 
     </div>
   </div>);

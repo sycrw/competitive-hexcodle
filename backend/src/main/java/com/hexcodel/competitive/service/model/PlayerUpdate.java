@@ -1,6 +1,5 @@
-package com.hexcodel.competitive.message.model;
+package com.hexcodel.competitive.service.model;
 
-import com.hexcodel.competitive.message.model.PlayerUpdateEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

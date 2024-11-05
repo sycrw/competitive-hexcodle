@@ -16,7 +16,7 @@ export const Game = () => {
 		if(gameSlug){
 			gameApi.getGame(gameSlug).then((res)=>{setGame(res.data)});
 		}
-		connect(handleBets,handlePlayer,handleGame);
+		connect(handleBets,handlePlayer,handleGame,{gameSlug:gameSlug});
 
 	}, []);
 

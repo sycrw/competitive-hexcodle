@@ -5,20 +5,20 @@ const SOCKET_URL = `http://${envSettings.getHost()}/ws`;
 
 let stompClient = null;
 
-export const connect = (onBetRecived,onPlayerRecived,onGameRecived) => {
+export const connect = (onBetRecived,onPlayerRecived,onGameRecived,{gameSlug}) => {
     const socket = new SockJS(SOCKET_URL,{});
     stompClient = new Client({
         webSocketFactory: () => socket,
         onConnect: () => {
             console.log('Connected to WebSocket');
             // Subscribe to a topic
-            stompClient.subscribe('/topic/bet', (message) => {
+            stompClient.subscribe(`/topic/${gameSlug}/bet`, (message) => {
                 onBetRecived(JSON.parse(message.body));
             });
-            stompClient.subscribe('/topic/player', (message) => {
+            stompClient.subscribe(`/topic/${gameSlug}/player`, (message) => {
                 onPlayerRecived(JSON.parse(message.body));
             });
-            stompClient.subscribe('/topic/game', (message) => {
+            stompClient.subscribe(`/topic/${gameSlug}/game`, (message) => {
                 onGameRecived(JSON.parse(message.body));
             });
         },

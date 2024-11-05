@@ -1,4 +1,4 @@
-package com.hexcodel.competitive.message.model;
+package com.hexcodel.competitive.service.model;
 
 public enum PlayerUpdateEnum {
     JOINED("JOINED");

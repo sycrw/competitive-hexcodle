@@ -2,8 +2,8 @@ package com.hexcodel.competitive.service;
 
 import java.util.List;
 
-import com.hexcodel.competitive.message.model.PlayerUpdate;
-import com.hexcodel.competitive.message.model.PlayerUpdateEnum;
+import com.hexcodel.competitive.service.model.PlayerUpdate;
+import com.hexcodel.competitive.service.model.PlayerUpdateEnum;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
@@ -25,14 +25,14 @@ public class PlayerService {
     private ServiceMapper serviceMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
-    private static final String PLAYER_TOPIC = "/topic/player";
+    private static final String PLAYER_TOPIC = "/topic/%s/player";
 
     public Player joinGameByGameSlug(String gameSlug) {
         String nickname = nicknameGenerator.generateRandomNickname();
         Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(gameSlug));
         PlayerEntity playerEntity = PlayerEntity.builder().nickname(nickname).gameId(game.getId()).build();
         //notify everyone else
-        messagingTemplate.convertAndSend(PLAYER_TOPIC, PlayerUpdate.builder().playerUpdateEnum(PlayerUpdateEnum.JOINED).playerId(playerEntity.getId()).build());
+        messagingTemplate.convertAndSend(String.format(PLAYER_TOPIC,gameSlug), PlayerUpdate.builder().playerUpdateEnum(PlayerUpdateEnum.JOINED).playerId(playerEntity.getId()).build());
         return serviceMapper.playerEntitytoPlayer(playerJpaRepository.save(playerEntity));
     }
 

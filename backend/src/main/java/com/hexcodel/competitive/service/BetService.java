@@ -1,12 +1,13 @@
 package com.hexcodel.competitive.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.hexcodel.competitive.data.repository.GameRepository;
 import com.hexcodel.competitive.data.repository.PlayerRepository;
-import com.hexcodel.competitive.message.model.BetMessage;
-import com.hexcodel.competitive.message.model.BetResult;
+import com.hexcodel.competitive.service.model.BetRequest;
+import com.hexcodel.competitive.service.model.BetResult;
 import com.hexcodel.competitive.service.model.Game;
 
 import lombok.AllArgsConstructor;
@@ -18,12 +19,19 @@ public class BetService
     GameRepository gameRepository;
     PlayerRepository playerRepository;
     ServiceMapper serviceMapper;
+    private final SimpMessagingTemplate messagingTemplate;
+
+    private static final String PLAYER_TOPIC = "/topic/%s/bet";
 
     @Transactional
-    public BetResult validateBet(BetMessage betMessage){
-        System.out.println("gameId: " + betMessage.getGameId());
-        Game game = serviceMapper.gameEntityToGame(gameRepository.getReferenceById(betMessage.getGameId()));
-        boolean betCorrect = game.getColorHexCode().equals(betMessage.getHexCode());
-        return BetResult.builder().correct(betCorrect).gameId(game.getId()).userId(betMessage.getUserId()).build();
+    public BetResult bet(BetRequest betRequest){
+        System.out.println("gameId: " + betRequest.getGameId());
+        Game game = serviceMapper.gameEntityToGame(gameRepository.getReferenceById(betRequest.getGameId()));
+        boolean betCorrect = game.getColorHexCode().equals(betRequest.getHexCode());
+        var result = BetResult.builder().correct(betCorrect).gameId(game.getId()).playerId(betRequest.getPlayerId()).build();
+        //notify players:
+        messagingTemplate.convertAndSend(String.format(PLAYER_TOPIC,game.getSlug()), result);
+        System.out.println("Sent bet to: " +  String.format(PLAYER_TOPIC,game.getSlug()) + " with: " + result.toString());
+        return result;
     }
 }

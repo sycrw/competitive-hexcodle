@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 
 
+@Builder
 @Data
 @AllArgsConstructor
-@Builder
 public class PlayerUpdate {
-    private int playerId;
     private PlayerUpdateEnum playerUpdateEnum;
+    private Player player;
 }

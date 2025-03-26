@@ -2,6 +2,7 @@ package com.hexcodel.competitive.data.entity;
 
 import java.time.Instant;
 
+import com.hexcodel.competitive.service.model.GameStateEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +24,9 @@ public class GameEntity {
     int id;
     String slug;
     String colorHexCode;
+    @Column(name="game_state")
+    @Enumerated(EnumType.STRING)
+    GameStateEnum gameState;
     @CreationTimestamp
     private Instant createdOn;
     @UpdateTimestamp

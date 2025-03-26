@@ -1,5 +1,6 @@
 package com.hexcodel.competitive.service;
 
+import com.hexcodel.competitive.service.model.GameStateEnum;
 import org.springframework.stereotype.Service;
 
 import com.hexcodel.competitive.data.entity.GameEntity;
@@ -20,7 +21,7 @@ public class GameService {
         return serviceMapper.gameEntityToGame(gameRepository.save(GameEntity.
             builder().
             slug(GameSlugGenerator.generateGameSlug(SLUGLENGTH)).
-            colorHexCode(HexcodeGenerator.generateRandomHexCode()).
+                gameState(GameStateEnum.LOBBY).
             build()));
     }
 }

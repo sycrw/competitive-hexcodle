@@ -14,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 public class Game {
     int id;
     String slug;
+    String colorHexCode;
+    GameStateEnum gameState;
     Instant createdOn;
     Instant updatedOn;
-    String colorHexCode;
+
 }

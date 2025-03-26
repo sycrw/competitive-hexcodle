@@ -3,7 +3,8 @@ CREATE TABLE game
 (
     id             BIGINT AUTO_INCREMENT PRIMARY KEY,
     slug           VARCHAR(255) NOT NULL,
-    color_hex_code VARCHAR(7)   NOT NULL,
+    color_hex_code VARCHAR(7),
+    game_state     VARCHAR(255) NOT NULL,
     created_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -12,6 +13,7 @@ CREATE TABLE player
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     nickname   VARCHAR(255) NOT NULL,
     game_id    BIGINT       NOT NULL,
+    ready      BOOLEAN      NOT NULL,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

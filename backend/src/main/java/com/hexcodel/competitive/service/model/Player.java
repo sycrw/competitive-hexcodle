@@ -13,6 +13,7 @@ public class Player {
     int id;
     String nickname;
     int gameId;
+    boolean ready;
     private Instant createdOn;
     private Instant updatedOn;
 }

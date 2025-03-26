@@ -25,8 +25,7 @@ public class BetService
 
     @Transactional
     public BetResult bet(BetRequest betRequest){
-        System.out.println("gameId: " + betRequest.getGameId());
-        Game game = serviceMapper.gameEntityToGame(gameRepository.getReferenceById(betRequest.getGameId()));
+        Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(betRequest.getGameSlug()));
         boolean betCorrect = game.getColorHexCode().equals(betRequest.getHexCode());
         var result = BetResult.builder().correct(betCorrect).gameId(game.getId()).playerId(betRequest.getPlayerId()).build();
         //notify players:

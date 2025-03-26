@@ -9,6 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class BetRequest {
     int playerId;
-    int gameId;
+    String gameSlug;
     String hexCode;
 }

@@ -1,6 +1,7 @@
 package com.hexcodel.competitive.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.hexcodel.competitive.service.model.PlayerUpdate;
 import com.hexcodel.competitive.service.model.PlayerUpdateEnum;
@@ -31,14 +32,30 @@ public class PlayerService {
         String nickname = nicknameGenerator.generateRandomNickname();
         Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(gameSlug));
         PlayerEntity playerEntity = PlayerEntity.builder().nickname(nickname).gameId(game.getId()).build();
+        playerEntity = playerJpaRepository.save(playerEntity);
         //notify everyone else
-        messagingTemplate.convertAndSend(String.format(PLAYER_TOPIC,gameSlug), PlayerUpdate.builder().playerUpdateEnum(PlayerUpdateEnum.JOINED).playerId(playerEntity.getId()).build());
-        return serviceMapper.playerEntitytoPlayer(playerJpaRepository.save(playerEntity));
+        Player player = serviceMapper.playerEntitytoPlayer(playerEntity);
+        messagingTemplate.convertAndSend(String.format(PLAYER_TOPIC,gameSlug), PlayerUpdate.builder().playerUpdateEnum(PlayerUpdateEnum.JOINED).player(player).build());
+        return player;
     }
 
     public GameWithPlayers getGameWithPlayers(String gameSlug) {
         Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(gameSlug));
         List<Player> playerList = playerJpaRepository.getPlayersByGameSlug(gameSlug).stream().map(playerEntity -> serviceMapper.playerEntitytoPlayer(playerEntity)).toList();
         return GameWithPlayers.builder().game(game).playerList(playerList).build();
+    }
+
+    public Optional<PlayerUpdate> ready(String gameSlug, int playerId){
+        Optional<PlayerEntity> playerOpt = playerJpaRepository.getPlayerEntityById(playerId);
+        if(playerOpt.isEmpty()){
+            return Optional.empty();
+        }
+        PlayerEntity player = playerOpt.get();
+        player.setReady(!player.isReady());
+        playerJpaRepository.save(player);
+        //update others
+        PlayerUpdate playerUpdate = PlayerUpdate.builder().playerUpdateEnum(PlayerUpdateEnum.READY).player(serviceMapper.playerEntitytoPlayer(player)).build();
+        messagingTemplate.convertAndSend(String.format(PLAYER_TOPIC,gameSlug), playerUpdate);
+        return Optional.of(playerUpdate);
     }
 }

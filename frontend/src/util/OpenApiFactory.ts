@@ -1,4 +1,4 @@
-import {Configuration, GameControllerApi} from '../gen';
+import {BetControllerApi, Configuration, GameControllerApi, PlayerControllerApi} from '../gen';
 import axios from 'axios';
 import {envSettings} from './EnvSettings.ts';
 
@@ -12,3 +12,6 @@ lagerAxios.defaults.headers.common = {
 lagerAxios.defaults.withCredentials = false;
 
 export const gameApi = new GameControllerApi(configuration, basePath, lagerAxios);
+export const betApi = new BetControllerApi(configuration,basePath,lagerAxios);
+
+export const playerApi = new PlayerControllerApi(configuration,basePath,lagerAxios);

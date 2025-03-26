@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/api/v1/game")
 @AllArgsConstructor
@@ -16,7 +18,8 @@ public class BetController {
     private BetService betService;
 
     @PostMapping("/{slug}/bet")
-    BetResult bet(@RequestBody @Valid BetRequest betRequest){
+    BetResult bet(@PathVariable String slug,  @RequestBody BetRequest betRequest){
+        if(Objects.isNull( betRequest.getGameSlug())) betRequest.setGameSlug(slug);
         return betService.bet(betRequest);
     }
 }

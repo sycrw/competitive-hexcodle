@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.hexcodel.competitive.data.entity.GameEntity;
 
+import java.util.Optional;
+
 @Repository
 public interface GameRepository extends JpaRepository<GameEntity, Integer> {
     @Query("SELECT g FROM GameEntity g WHERE g.slug = :slug")
-    GameEntity getBySlug(@Param("slug") String slug);
+    Optional<GameEntity> getBySlug(@Param("slug") String slug);
 }

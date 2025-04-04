@@ -1,6 +1,7 @@
 package com.hexcodel.competitive.data.entity;
 
 import java.time.Instant;
+import java.util.List;
 
 import com.hexcodel.competitive.service.model.GameStateEnum;
 import jakarta.persistence.*;
@@ -31,4 +32,6 @@ public class GameEntity {
     private Instant createdOn;
     @UpdateTimestamp
     private Instant updatedOn;
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlayerEntity> players;
 }

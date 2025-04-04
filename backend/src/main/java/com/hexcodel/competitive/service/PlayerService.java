@@ -30,7 +30,9 @@ public class PlayerService {
 
     public Player joinGameByGameSlug(String gameSlug) {
         String nickname = nicknameGenerator.generateRandomNickname();
-        Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(gameSlug));
+        var entity = gameRepository.getBySlug(gameSlug);
+        if(entity.isEmpty()) return null;
+        Game game = serviceMapper.gameEntityToGame(entity.get());
         PlayerEntity playerEntity = PlayerEntity.builder().nickname(nickname).gameId(game.getId()).build();
         playerEntity = playerJpaRepository.save(playerEntity);
         //notify everyone else
@@ -40,9 +42,11 @@ public class PlayerService {
     }
 
     public GameWithPlayers getGameWithPlayers(String gameSlug) {
-        Game game = serviceMapper.gameEntityToGame(gameRepository.getBySlug(gameSlug));
-        List<Player> playerList = playerJpaRepository.getPlayersByGameSlug(gameSlug).stream().map(playerEntity -> serviceMapper.playerEntitytoPlayer(playerEntity)).toList();
-        return GameWithPlayers.builder().game(game).playerList(playerList).build();
+        var gameEntity = gameRepository.getBySlug(gameSlug);
+        if(gameEntity.isEmpty()) return null;
+        Game game = serviceMapper.gameEntityToGame(gameEntity.get());
+        List<Player> players = gameEntity.get().getPlayers().stream().map(serviceMapper::playerEntitytoPlayer).toList();
+        return GameWithPlayers.builder().game(game).playerList(players).build();
     }
 
     public Optional<PlayerUpdate> ready(String gameSlug, int playerId){
